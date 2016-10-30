@@ -11,8 +11,8 @@ module Casein
     end
   
     def create
-      # ActionController::Parameters.permit_all_parameters = true
-      @admin_user_session = Casein::AdminUserSession.new params[:casein_admin_user_session].to_h
+      ActionController::Parameters.permit_all_parameters = true
+      @admin_user_session = Casein::AdminUserSession.new params[:casein_admin_user_session]
       if @admin_user_session.save
         redirect_back_or_default :controller => :casein, :action => :index
       else

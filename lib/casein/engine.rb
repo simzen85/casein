@@ -1,12 +1,13 @@
 require "casein"
 require "rails"
 require 'bootstrap-sass'
+require 'jquery-rails'
 
 module Casein
   class Engine < Rails::Engine
     
     initializer "casein.assets.precompile" do |app|
-      app.config.assets.precompile += %w(casein/login.css casein/casein.css casein/casein.js casein/html5shiv.js casein/custom.css casein/custom.js casein/*.png)
+      app.config.assets.precompile += %w(casein/login.css casein/casein.css casein/casein.js casein/html5shiv.js casein/custom.css casein/custom.js casein/auth_custom.css casein/auth_custom.js casein/*.png)
     end
 
     rake_tasks do

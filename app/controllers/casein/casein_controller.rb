@@ -11,8 +11,8 @@ module Casein
     layout 'casein_main'
    
     helper_method :current_admin_user_session, :current_user
-    before_filter :authorise
-    before_filter :set_time_zone
+    before_action :authorise
+    before_action :set_time_zone
     
     ActionView::Base.field_error_proc = proc { |input, instance| "#{input}".html_safe }
 
@@ -50,13 +50,13 @@ module Casein
   
     def needs_admin
       unless @session_user.is_admin?
-        redirect_to :controller => :casein, :action => :index
+        redirect_to controller: :casein, action: :index
       end
     end
   
     def needs_admin_or_current_user
       unless @session_user.is_admin? || params[:id].to_i == @session_user.id
-        redirect_to :controller => :casein, :action => :index
+        redirect_to controller: :casein, action: :index
       end
     end
     
@@ -66,7 +66,9 @@ module Casein
     end
 
     def sort_order(default)
-      "#{(params[:c] || default.to_s).gsub(/[\s;'\"]/,'')} #{'ASC' if params[:d] == 'up'} #{'DESC' if params[:d] == 'down'}"
+      column = (params[:c] || default.to_s).gsub(/[\s;'\"]/,'')
+      direction = params[:d] == 'down' ? 'DESC' : 'ASC'
+      { column => direction }
     end
 
   end

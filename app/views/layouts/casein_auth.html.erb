@@ -5,22 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Welcome to <%= casein_config_website_name %></title>
-    <%= stylesheet_link_tag "casein/login" %>
-	<%= javascript_include_tag "casein/casein" %>
-	<%= csrf_meta_tag %>
+    <% casein_config_auth_stylesheet_includes.each do |stylesheet| %>
+      <%= stylesheet_link_tag(stylesheet) %>
+    <% end %>
 
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <% casein_config_auth_javascript_includes.each do |javascript| %>
+      <%= javascript_include_tag(javascript) %>
+    <% end %>
+
+    <%= csrf_meta_tag %>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <%= javascript_include_tag("casein/html5shiv") %>
     <![endif]-->
 
   </head>
 
-  <body>
+  <body class="casein-login">
   	<div class="container-narrow">
 		<div class="jumbotron">
 			<div class="row brand">
-				<%= image_tag(casein_config_logo, :alt => casein_config_website_name) %>
+				<%= image_tag(casein_config_logo, alt: casein_config_website_name) %>
 			</div>
 			<%= yield %>
 		</div>
